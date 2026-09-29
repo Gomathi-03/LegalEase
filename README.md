@@ -1,157 +1,199 @@
 LegalEase — AI-Powered Legal Document Generator
 
-LegalEase is a local AI-powered application that helps users draft, edit, and export legal documents in multiple formats.
+LegalEase is a complete local application based on the supplied project specification. It uses:
 
-✨ Features
+Streamlit for the frontend, editable preview, branding, and downloads.
 
-- 🤖 AI-assisted drafting using Google Gemini
-- 🖥️ Streamlit frontend with editable document preview
-- ⚡ FastAPI backend with "/generate" API and health checks
-- 📝 DOCX export using "python-docx"
-- 📄 PDF export using "FPDF2"
-- 📃 TXT export for plain text
-- 🖼️ Custom logo support for generated documents
-- 🧪 Automated API and document-export tests
-- 🐳 Docker support
+FastAPI for the backend /generate API and health checks.
 
-«Note: The original specification mentioned Gemini 1.5 Pro and the legacy "google-generativeai" package. LegalEase uses Google's current "google-genai" SDK instead. Set "GEMINI_MODEL" to a model available to your API account.»
+Gemini for AI-assisted legal-document drafting.
 
-📁 Project Structure
+python-docx for editable Word documents.
 
-LegalEase/
-├── assets/                 # Project assets and logo
-├── backend/                # FastAPI backend
-│   ├── ai_core/            # Gemini integration
-│   ├── services/           # Document generation
-│   ├── config.py
-│   ├── main.py
-│   ├── routes.py
-│   └── schemas.py
-├── frontend/
-│   └── app.py              # Streamlit application
-├── tests/                  # Automated tests
-├── .env.example
-├── .gitignore
-├── Dockerfile
-├── docker-compose.yml
-├── Procfile
-├── requirements.txt
-└── README.md
+FPDF2 for branded PDF output.
 
-🚀 Installation
+TXT export for plain text.
 
-Windows
 
-cd LegalEase
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+The supplied specification explicitly names Gemini 1.5 Pro and the legacy google-generativeai package. The implementation uses Google's current google-genai SDK instead, because Google currently recommends that SDK and lists the older Python package as a legacy/deprecated library. Set GEMINI_MODEL to a model available to your API account. See Google's official SDK guidance: https://ai.google.dev/gemini-api/docs/libraries
+
+1. Project structure
+
+LegalEase/  
+├── assets/  
+│   └── logo.png  
+├── backend/  
+│   ├── __init__.py  
+│   ├── ai_core/  
+│   │   ├── __init__.py  
+│   │   └── gemini_generator.py  
+│   ├── config.py  
+│   ├── main.py  
+│   ├── routes.py  
+│   ├── schemas.py  
+│   ├── services/  
+│   │   ├── __init__.py  
+│   │   └── document_service.py  
+│   └── utils/  
+│       ├── __init__.py  
+│       └── sanitize.py  
+├── frontend/  
+│   └── app.py  
+├── tests/  
+│   ├── test_api.py  
+│   └── test_documents.py  
+├── .env.example  
+├── .gitignore  
+├── Dockerfile  
+├── Procfile  
+├── docker-compose.yml  
+├── README.md  
+└── requirements.txt
+
+2. VS Code setup
+
+Windows PowerShell
+
+cd LegalEase  
+py -3.12 -m venv .venv  
+.venv\Scripts\Activate.ps1  
+python -m pip install --upgrade pip  
+pip install -r requirements.txt  
 copy .env.example .env
 
 Linux / macOS
 
-cd LegalEase
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+cd LegalEase  
+python3 -m venv .venv  
+source .venv/bin/activate  
+python -m pip install --upgrade pip  
+pip install -r requirements.txt  
 cp .env.example .env
 
-Open the project in VS Code:
+Open the folder in VS Code:
 
 code .
 
-Select the ".venv" interpreter from Python: Select Interpreter.
+Choose the .venv Python interpreter from Ctrl+Shift+P → Python: Select Interpreter.
 
-🔑 Configure Gemini
+3. Configure Gemini
 
-Add your API key to ".env":
+Open .env and set:
 
-GEMINI_API_KEY=your_real_key
+GEMINI_API_KEY=your_real_key  
 GEMINI_MODEL=gemini-3.8-flash
 
-Create/manage your API key through "Google AI Studio" (https://aistudio.google.com/?utm_source=chatgpt.com).
+Create/manage the API key in Google AI Studio. Never commit .env to Git.
 
-Never commit ".env" to Git.
+If the model name above is unavailable to your account, change GEMINI_MODEL to a currently available text-generation model in your Gemini API account.
 
-If the configured model is unavailable for your account, replace "GEMINI_MODEL" with a currently available Gemini text-generation model.
+4. Run the backend
 
-▶️ Run the Application
+Open VS Code terminal 1:
 
-Terminal 1 — Backend
-
-source .venv/bin/activate
+source .venv/bin/activate  
 uvicorn backend.main:app --reload --port 8000
 
-Windows PowerShell uses the same "uvicorn" command after activating the environment.
+Windows PowerShell after activation uses the same command:
 
-Backend:
+uvicorn backend.main:app --reload --port 8000
 
-http://127.0.0.1:8000
+Check:
 
-Swagger API documentation:
+API: http://127.0.0.1:8000
 
-http://127.0.0.1:8000/docs
+Swagger: http://127.0.0.1:8000/docs
 
-Health check:
+Health: http://127.0.0.1:8000/health
 
-http://127.0.0.1:8000/health
 
-Terminal 2 — Frontend
+5. Run Streamlit
 
-source .venv/bin/activate
+Open VS Code terminal 2:
+
+source .venv/bin/activate  
 streamlit run frontend/app.py
 
-Open:
+Open the URL Streamlit prints, normally http://localhost:8501.
 
-http://localhost:8501
+6. Test the complete flow
 
-🔄 How It Works
+Use these sample inputs:
 
-User Input
-    ↓
-Streamlit Frontend
-    ↓
-FastAPI Backend
-    ↓
-Google Gemini
-    ↓
-AI-Generated Legal Draft
-    ↓
-Edit & Review
-    ↓
-TXT / DOCX / PDF
+Document Type
 
-🧪 Run Tests
+Freelance Work Contract
+
+Parties
+
+Jane Doe (Service Provider), TechNova Inc. (Client)
+
+Terms
+
+Payment to be made within 30 days of invoice; The provider agrees to deliver work by the agreed deadline; Confidentiality must be maintained; Either party may terminate with 15 days notice
+
+Effective Date
+
+April 15, 2026
+
+Then:
+
+1. Click Generate Document.
+
+
+2. Review the AI draft.
+
+
+3. Edit it in the editable text area.
+
+
+4. Optionally upload a PNG/JPG logo.
+
+
+5. Download TXT, DOCX, and PDF.
+
+
+6. Open the DOCX and PDF to verify headings, terms table, logo, and footer.
+
+
+
+7. Run automated tests
 
 pytest -q
 
-Tests cover API health/root endpoints and local TXT, DOCX, and PDF generation without making an AI request.
+These tests verify the API health/root endpoints and the local TXT/DOCX/PDF exporters without making an AI request.
 
-🐳 Docker
+8. API example
 
-Create ".env" first, then run:
+curl -X POST "http://127.0.0.1:8000/generate" \  
+  -H "Content-Type: application/json" \  
+  -d '{  
+    "document_type": "Non-Disclosure Agreement",  
+    "parties": "Jane Doe (Disclosing Party), TechNova Inc. (Receiving Party)",  
+    "terms": "Confidential information must not be disclosed; Confidentiality lasts 2 years; Either party may terminate with 15 days notice",  
+    "dates": "April 15, 2026",  
+    "jurisdiction": "Tamil Nadu, India",  
+    "language": "English",  
+    "additional_instructions": "Use clear section headings."  
+  }'
+
+9. Docker
+
+Create .env first, then:
 
 docker compose up --build
 
-- Frontend: "http://localhost:8501"
-- Backend: "http://localhost:8000/docs"
+Frontend: http://localhost:8501
+Backend: http://localhost:8000/docs
 
-🔐 Important Notes
+10. Important implementation notes
 
-- The Gemini API key remains on the backend and is never exposed to the browser.
-- User-provided legal information is sent to Gemini only during the document-generation request.
-- The AI prompt instructs Gemini not to invent missing facts or legal citations.
-- Document exports use deterministic formatting and do not require additional AI calls.
-- LegalEase is a drafting and information tool, not a substitute for professional legal advice or attorney review.
+The Gemini API key stays on the backend; Streamlit does not send the key to the browser.
 
-📌 Disclaimer
+User-entered legal facts are passed to Gemini only for the generation request.
 
-LegalEase helps users create and understand draft legal documents. Users should have important documents reviewed by a qualified legal professional before relying on them.
+The AI prompt explicitly instructs the model not to fabricate missing facts or legal citations.
 
----
+Export formatting is deterministic and does not require another AI call.
 
-Built with
-
-Python • Streamlit • FastAPI • Google Gemini • python-docx • FPDF2
+The application is a drafting aid, not a substitute for legal advice or attorney review.
