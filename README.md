@@ -3,10 +3,6 @@
 
 [**Open LegalEase**](https://legalease-frontend-l6a6.onrender.com)
 
-## 📄 Project Documentation
-
-https://drive.google.com/file/d/1k4gbSH0Xc3bqtmkkGyCoEzDohpOYy96C/view?usp=drivesdk
-
 # LegalEase — AI-Powered Legal Document Generator
 
 LegalEase is a complete local application based on the supplied project specification. It uses:
@@ -24,6 +20,10 @@ LegalEase is a complete local application based on the supplied project specific
 - **TXT** export for plain text.
 
 The supplied specification explicitly names Gemini 1.5 Pro and the legacy `google-generativeai` package. The implementation uses Google's current `google-genai` SDK instead, because Google currently recommends that SDK and lists the older Python package as a legacy/deprecated library. Set `GEMINI_MODEL` to a model available to your API account. See Google's official SDK guidance: https://ai.google.dev/gemini-api/docs/libraries
+
+## 📄 Project Documentation
+
+https://drive.google.com/file/d/1k4gbSH0Xc3bqtmkkGyCoEzDohpOYy96C/view?usp=drivesdk
 
 ## 1. Project structure
 
