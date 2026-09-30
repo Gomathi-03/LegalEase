@@ -2,7 +2,9 @@
 ## 🚀 Live Demo
 
 [**Open LegalEase**](https://legalease-frontend-l6a6.onrender.com)
+## 📄 Project Documentation
 
+"View LegalEase Project Documentation" (https://drive.google.com/file/d/1k4gbSH0Xc3bqtmkkGyCoEzDohpOYy96C/view?usp=drivesdk)
 
 # LegalEase — AI-Powered Legal Document Generator
 
