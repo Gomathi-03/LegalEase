@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     app_name: str = "LegalEase"
     environment: str = "development"
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.8-flash"
     max_input_chars: int = 12000
     cors_origins: str = "http://localhost:8501,http://127.0.0.1:8501"
 
