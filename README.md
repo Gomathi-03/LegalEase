@@ -8,18 +8,21 @@
 
 LegalEase is a complete local application based on the supplied project specification. It uses:
 
-- **Streamlit** for the frontend, editable preview, branding, and downloads.
-- **FastAPI** for the backend `/generate` API and health checks.
-- **Gemini** for AI-assisted legal-document drafting.
-- **python-docx** for editable Word documents.
-- **FPDF2** for branded PDF output.
-- **TXT** export for plain text.
+- Streamlit for the frontend, editable preview, branding, and downloads.
+- FastAPI for the backend "/generate" API and health checks.
+- Gemini for AI-assisted legal-document drafting.
+- python-docx for editable Word documents.
+- FPDF2 for branded PDF output.
+- TXT export for plain text.
 
-The supplied specification explicitly names Gemini 1.5 Pro and the legacy `google-generativeai` package. The implementation uses Google's current `google-genai` SDK instead, because Google currently recommends that SDK and lists the older Python package as a legacy/deprecated library. Set `GEMINI_MODEL` to a model available to your API account. See Google's official SDK guidance: https://ai.google.dev/gemini-api/docs/libraries
+The supplied specification explicitly names Gemini 1.5 Pro and the legacy "google-generativeai" package. The implementation uses Google's current "google-genai" SDK instead, because Google currently recommends that SDK and lists the older Python package as a legacy/deprecated library. Set "GEMINI_MODEL" to a model available to your API account. See Google's official SDK guidance: https://ai.google.dev/gemini-api/docs/libraries
 
-## 1. Project structure
+📄 Project Documentation
 
-```text
+"View LegalEase Project Documentation" (./LegalEase_Project_Documentation.pdf)
+
+1. Project structure
+
 LegalEase/
 ├── assets/
 │   └── logo.png
@@ -50,67 +53,54 @@ LegalEase/
 ├── docker-compose.yml
 ├── README.md
 └── requirements.txt
-```
 
-## 2. VS Code setup
+2. VS Code setup
 
-### Windows PowerShell
+Windows PowerShell
 
-```powershell
 cd LegalEase
 py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 copy .env.example .env
-```
 
-### Linux / macOS
+Linux / macOS
 
-```bash
 cd LegalEase
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 cp .env.example .env
-```
 
 Open the folder in VS Code:
 
-```bash
 code .
-```
 
-Choose the `.venv` Python interpreter from **Ctrl+Shift+P → Python: Select Interpreter**.
+Choose the ".venv" Python interpreter from Ctrl+Shift+P → Python: Select Interpreter.
 
-## 3. Configure Gemini
+3. Configure Gemini
 
-Open `.env` and set:
+Open ".env" and set:
 
-```env
 GEMINI_API_KEY=your_real_key
 GEMINI_MODEL=gemini-3.8-flash
-```
 
-Create/manage the API key in Google AI Studio. Never commit `.env` to Git.
+Create/manage the API key in Google AI Studio. Never commit ".env" to Git.
 
-If the model name above is unavailable to your account, change `GEMINI_MODEL` to a currently available text-generation model in your Gemini API account.
+If the model name above is unavailable to your account, change "GEMINI_MODEL" to a currently available text-generation model in your Gemini API account.
 
-## 4. Run the backend
+4. Run the backend
 
 Open VS Code terminal 1:
 
-```bash
 source .venv/bin/activate
 uvicorn backend.main:app --reload --port 8000
-```
 
 Windows PowerShell after activation uses the same command:
 
-```powershell
 uvicorn backend.main:app --reload --port 8000
-```
 
 Check:
 
@@ -118,61 +108,52 @@ Check:
 - Swagger: http://127.0.0.1:8000/docs
 - Health: http://127.0.0.1:8000/health
 
-## 5. Run Streamlit
+5. Run Streamlit
 
 Open VS Code terminal 2:
 
-```bash
 source .venv/bin/activate
 streamlit run frontend/app.py
-```
 
 Open the URL Streamlit prints, normally http://localhost:8501.
 
-## 6. Test the complete flow
+6. Test the complete flow
 
 Use these sample inputs:
 
-**Document Type**
-```text
+Document Type
+
 Freelance Work Contract
-```
 
-**Parties**
-```text
+Parties
+
 Jane Doe (Service Provider), TechNova Inc. (Client)
-```
 
-**Terms**
-```text
+Terms
+
 Payment to be made within 30 days of invoice; The provider agrees to deliver work by the agreed deadline; Confidentiality must be maintained; Either party may terminate with 15 days notice
-```
 
-**Effective Date**
-```text
+Effective Date
+
 April 15, 2026
-```
 
 Then:
 
-1. Click **Generate Document**.
+1. Click Generate Document.
 2. Review the AI draft.
 3. Edit it in the editable text area.
 4. Optionally upload a PNG/JPG logo.
 5. Download TXT, DOCX, and PDF.
 6. Open the DOCX and PDF to verify headings, terms table, logo, and footer.
 
-## 7. Run automated tests
+7. Run automated tests
 
-```bash
 pytest -q
-```
 
 These tests verify the API health/root endpoints and the local TXT/DOCX/PDF exporters without making an AI request.
 
-## 8. API example
+8. API example
 
-```bash
 curl -X POST "http://127.0.0.1:8000/generate" \
   -H "Content-Type: application/json" \
   -d '{
@@ -184,20 +165,17 @@ curl -X POST "http://127.0.0.1:8000/generate" \
     "language": "English",
     "additional_instructions": "Use clear section headings."
   }'
-```
 
-## 9. Docker
+9. Docker
 
-Create `.env` first, then:
+Create ".env" first, then:
 
-```bash
 docker compose up --build
-```
 
 Frontend: http://localhost:8501
 Backend: http://localhost:8000/docs
 
-## 10. Important implementation notes
+10. Important implementation notes
 
 - The Gemini API key stays on the backend; Streamlit does not send the key to the browser.
 - User-entered legal facts are passed to Gemini only for the generation request.
