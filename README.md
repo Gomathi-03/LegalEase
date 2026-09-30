@@ -24,7 +24,6 @@ The supplied specification explicitly names Gemini 1.5 Pro and the legacy `googl
 
 ## 1. Project structure
 
-1. Project structure
 
 ```text
 
