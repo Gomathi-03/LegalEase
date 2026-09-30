@@ -23,7 +23,7 @@ The supplied specification explicitly names Gemini 1.5 Pro and the legacy `googl
 
 ## 📄 Project Documentation
 
-https://drive.google.com/file/d/1k4gbSH0Xc3bqtmkkGyCoEzDohpOYy96C/view?usp=drivesdk
+
 
 ## 1. Project structure
 
