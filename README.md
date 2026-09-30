@@ -24,6 +24,12 @@ The supplied specification explicitly names Gemini 1.5 Pro and the legacy `googl
 
 ## 1. Project structure
 
+📄 Project Documentation
+
+"View LegalEase Project Documentation" (./LegalEase_Project_Documentation.pdf)
+
+1. Project structure
+
 ```text
 
 LegalEase/
